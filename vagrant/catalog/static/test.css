@@ -1,0 +1,59 @@
+header {
+  background-color: navy;
+  color: white;
+  font-size: 30px;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: navy;
+    position: absolute; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+}
+
+/* Links inside the navbar */
+.navbar a {
+    float: left;
+    display: block;
+    color: navy;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+* {
+  color: #e45613;
+}
+
+body { 
+  padding-top: 70px; 
+  background-color: #d3d3d4;
+}
+
+h3 {
+  color: navy;
+}
+
+.btn-login {
+  background-color: #e45613;
+  border-color: #e45613;
+  color: white;
+  font-size: 15px;
+}
+
+p {
+  color: white;
+}
+
+main {
+  background-color: white;
+}
+
+main.container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.verticalLine {
+  border-right: thick solid #b3b3b3;
+}
