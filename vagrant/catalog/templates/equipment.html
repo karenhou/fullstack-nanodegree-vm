@@ -1,0 +1,20 @@
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
+<div class='flash'>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+    </ul>
+    {% endif %} 
+    {% endwith %}
+</div>
+<main class="container">
+    <section class="row display-flex equip-des">
+        <h3>{{equipment.name}}</h3>
+        <p>Description: {{equipment.description}}</p>
+        <a href='{{url_for('editEquip', equipment_name = equipment.name) }}'>Edit |</a>
+        <a href='{{url_for('deleteEquip',  equipment_name = equipment.name) }}'>Delete</a>
+    </section>
+</main>
+{% endblock %}

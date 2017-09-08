@@ -32,6 +32,7 @@ body {
 
 h3 {
   color: navy;
+  margin-top: 0;
 }
 
 .btn-login {
@@ -42,7 +43,8 @@ h3 {
 }
 
 p {
-  color: white;
+  color: black;
+  font-size: 18px;
 }
 
 main {
@@ -56,4 +58,12 @@ main.container {
 
 .verticalLine {
   border-right: thick solid #b3b3b3;
+}
+
+.title {
+  color: white;
+}
+
+.equip-des {
+  margin:10px;
 }
