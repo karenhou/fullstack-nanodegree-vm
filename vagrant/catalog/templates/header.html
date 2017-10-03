@@ -2,14 +2,12 @@
     <div class="container">
         <div class="row display-flex">
             <div class="col-md-6 title">
-                <h1>Catelog App</h1>
+                <a href="{{url_for('showCategories')}}" class="">Catalog App</a>
             </div>
-            <div class="col-md-6 text-right">
+            <div class="col-md-6">
                 {%if 'username' not in session %}
-                	<a href="{{url_for('showLogin')}}" class="btn btn-info" role="button">Login</a> 
-                {% else %}
-                	<a href="{{url_for('disconnect')}}" class="btn btn-info" role="button">LogOut</a>
-                {% endif %}
+                <a href="{{url_for('showLogin')}}" class="btn btn-info pull-right bottomright bottomcolor" role="button">Login</a> {% else %}
+                <a href="{{url_for('disconnect')}}" class="btn btn-info pull-right bottomright bottomcolor" role="button">LogOut</a> {% endif %}
             </div>
         </div>
 </header>

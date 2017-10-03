@@ -1,69 +1,118 @@
 header {
-  background-color: navy;
-  color: white;
-  font-size: 30px;
+    background-color: navy;
+    color: white;
+    font-size: 30px;
 }
 
 .navbar {
     overflow: hidden;
     background-color: navy;
-    position: absolute; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
+    position: absolute;
+    /* Set the navbar to fixed position */
+    top: 0;
+    /* Position the navbar at the top of the page */
+    width: 100%;
+    /* Full width */
 }
 
+
 /* Links inside the navbar */
+
 .navbar a {
     float: left;
     display: block;
-    color: navy;
+    color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
+
 * {
-  color: #e45613;
+    color: #e45613;
 }
 
-body { 
-  padding-top: 70px; 
-  background-color: #d3d3d4;
+body {
+    padding-top: 70px;
+    background-color: #d3d3d4;
 }
+
 
 h3 {
-  color: navy;
-  margin-top: 0;
+    color: navy;
+    margin-top: 10px;
+}
+
+h4 {
+    color: #e45613;
 }
 
 .btn-login {
-  background-color: #e45613;
-  border-color: #e45613;
-  color: white;
-  font-size: 15px;
+    background-color: #e45613;
+    border-color: #e45613;
+    color: white;
+    font-size: 15px;
 }
 
 p {
-  color: black;
-  font-size: 18px;
+    color: black;
+    font-size: 18px;
 }
 
 main {
-  background-color: white;
+    background-color: white;
 }
 
 main.container {
-  padding-top: 15px;
-  padding-bottom: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .verticalLine {
-  border-right: thick solid #b3b3b3;
+    border-right: thick solid #b3b3b3;
 }
 
 .title {
-  color: white;
+    color: white;
 }
 
 .equip-des {
-  margin:10px;
+    margin: 10px;
+}
+
+.bottomcolor {
+    color: white !important;
+    background-color: #e45613;
+}
+
+.bottomright {
+    bottom: 0;
+    margin-bottom: 10px;
+    margin: 10px;
+    right: 0;
+}
+
+.equipfont {
+    color: #e45613 !important;
+}
+
+.newitemfont {
+    color: #e45613;
+}
+
+.editItemfont {
+    color: navy;
+}
+
+label {
+    color: navy;
+}
+
+.equip {
+    color: #e45613;
+    font-weight: 700;
+}
+
+.catagory {
+    color: grey;
+    font-style: italic;
 }
