@@ -1,7 +1,10 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.types import TIMESTAMP
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
+from sqlalchemy.sql import func
+from datetime import datetime
 
 Base = declarative_base()
 
@@ -38,6 +41,8 @@ class EquipmentItem(Base):
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
     description = Column(String(250))
+    time_created = Column(TIMESTAMP, server_default=func.now())
+    time_updated = Column(TIMESTAMP, onupdate=func.now())
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
     user_id = Column(Integer, ForeignKey('user.id'))
@@ -53,15 +58,6 @@ class EquipmentItem(Base):
         }
 
 
-class LastAdded(Base):
-    __tablename__ = 'last_added'
-
-    equipment = Column(String(80), nullable=False)
-    id = Column(Integer, primary_key=True)
-    category = Column(String(80), nullable=False)
-
-
 engine = create_engine('sqlite:///sportscategory.db')
-
 
 Base.metadata.create_all(engine)

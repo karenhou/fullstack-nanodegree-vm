@@ -1,12 +1,16 @@
-{% extends "main.html" %} {% block content %} {% include "header.html" %}
+{% extends "main.html" %} 
+{% block content %} 
+{% include "header.html" %}
 <div class='flash'>
-    {% with messages = get_flashed_messages() %} {% if messages %}
+    {% with messages = get_flashed_messages() %} 
+    {% if messages %}
     <ul>
         {% for message in messages %}
         <li> <strong> {{ message }} </strong> </li>
         {% endfor %}
     </ul>
-    {% endif %} {% endwith %}
+    {% endif %} 
+    {% endwith %}
 </div>
 <main class="container">
     <div class="row display-flex">
@@ -30,18 +34,30 @@
                 {% endfor %}
         </div>
         <div class="col col-md-8">
-            <div class="row verticalLine">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-                    <a href='#'>Add Item</a>
-                    <h3>Latest Edit Items</h3> {% for i in latest_add %}
-                    <span class="eqiup">{{i.equipment}} </span>
-                    <span class="catagory">({{i.category}})</span>
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <a href='#'>Add Item</a>
+                        <h3>Latest Edit Items</h3>
+                    </div>
+                    <div class="col-md-1"></div>
                 </div>
-                <div class="col-md-1"></div>
+                {% for i in latest_add %}
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 latest-add-box">
+                        <span class="latest-add-equip">{{i.name}} </span> 
+                        {% for c in categories%} 
+                            {% if c.id == i.id%}
+                                <span class="latest-add-cat"> ({{c.name}})</span> 
+                            {% endif %} 
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-    </div>
 </main>
 {% endblock %}

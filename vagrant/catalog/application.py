@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
-from sqlalchemy import create_engine, asc
+from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, EquipmentItem, User, LastAdded
+from database_setup import Base, Category, EquipmentItem, User
 from flask import session as login_session
 import random
 import string
@@ -282,7 +282,7 @@ def ItemJSON(category_id, item_id):
     return jsonify(Item=Item.serialize)
 
 
-@app.route('/catelog/JSON')
+@app.route('/catelog.json')
 def categoryJSON():
     categories = session.query(Category).all()
     return jsonify(categories=[r.serialize for r in categories])
@@ -294,8 +294,7 @@ def categoryJSON():
 def showCategories():
     #categories = session.query(Category).order_by(asc(Category.name))
     categories = session.query(Category).all()
-    latest_add = session.query(LastAdded).all()
-    print str(latest_add)
+    latest_add = session.query(EquipmentItem).order_by(desc(EquipmentItem.time_updated)).limit(9).all()
     if 'username' not in login_session:
         return render_template('publicCategory.html', categories=categories, latest_add=latest_add)
     else:
@@ -471,16 +470,15 @@ def newEquip(category_name):
     if 'username' not in login_session:
         return redirect('/login')
     category = session.query(Category).filter_by(name=category_name).one()
-    print str(category)
     if request.method == 'POST':
         equip = EquipmentItem(name=request.form['name'], description=request.form['description'],
                               category_id=category.id, user_id=login_session['user_id'])
         session.add(equip)
         session.commit()
-        add_equip = LastAdded(equipment=request.form[
+        '''add_equip = LastAdded(equipment=request.form[
                               'name'], category=category.name)
         session.add(add_equip)
-        session.commit()
+        session.commit()'''
         flash('New Item %s Successfully Created' % (equip.name))
         return redirect(url_for('showItem', category_name=category_name))
     else:
@@ -511,6 +509,10 @@ def editEquip(equipment_name):
             editedEquip.category_id = convertCatId.id
         session.add(editedEquip)
         session.commit()
+        '''add_equip = LastAdded(equipment=request.form[
+                              'name'], category=category.name)
+        session.add(add_equip)
+        session.commit()'''
         flash('Equip Successfully Edited')
         return redirect(url_for('showItem', category_name=category.name))
     else:
