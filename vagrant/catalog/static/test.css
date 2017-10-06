@@ -7,9 +7,10 @@ header {
 .navbar {
     overflow: hidden;
     background-color: navy;
-    position: absolute;
+    position: fixed;
     /* Set the navbar to fixed position */
     top: 0;
+    left: 0;
     /* Position the navbar at the top of the page */
     width: 100%;
     /* Full width */
@@ -74,6 +75,8 @@ main.container {
 
 .title {
     color: white;
+    font-size: 30px;
+    font-weight: 700;
 }
 
 .equip-des {
@@ -106,6 +109,7 @@ main.container {
 
 label {
     color: navy;
+    margin-bottom: 5px;
 }
 
 .latest-add-box {
@@ -122,4 +126,12 @@ label {
 .latest-add-cat {
     color: grey;
     font-style: italic;
+}
+
+.edit-margin {
+    margin-bottom: 10px;
+}
+
+.form-control {
+    width: 40%;
 }

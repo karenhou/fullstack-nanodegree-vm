@@ -43,7 +43,7 @@ class EquipmentItem(Base):
     description = Column(String(250))
     time_created = Column(TIMESTAMP, server_default=func.now())
     time_updated = Column(TIMESTAMP, onupdate=func.now())
-    category_id = Column(Integer, ForeignKey('category.id'))
+    category_id = Column(Integer, ForeignKey('category.id'), nullable=False)
     category = relationship(Category)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)

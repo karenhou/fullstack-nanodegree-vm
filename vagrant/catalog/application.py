@@ -48,7 +48,7 @@ def createUser(login_session):
 
 
 def getUserInfo(user_id):
-    user = session.query(User).filter_by(id=user_id).one()
+    user = session.query(User).filter_by(id=user_id).first()
     return user
 
 
@@ -285,7 +285,8 @@ def ItemJSON(category_id, item_id):
 @app.route('/catelog.json')
 def categoryJSON():
     categories = session.query(Category).all()
-    return jsonify(categories=[r.serialize for r in categories])
+    items = session.query(EquipmentItem).all()
+    return jsonify(categories=[r.serialize for r in categories], items = [i.serialize for i in items])
 
 
 # Show all categories
@@ -353,17 +354,7 @@ def deleteCategory(category_name):
   else:
     return render_template('deleteCategory.html',category = categoryToDelete)'''
 
-
-@app.route('/test/<category_name>/')
-#@app.route('/test/')
-def testpage(category_name):
-    categories = session.query(Category).all()
-    category = session.query(Category).filter_by(name=category_name).one()
-    return render_template('test.html', categories=categories, category=category)
-
 # Show a category item
-
-
 @app.route('/catelog/<category_name>/')
 @app.route('/catelog/<category_name>/items')
 def showItem(category_name):
@@ -450,7 +441,7 @@ def showEquip(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
     creator = getUserInfo(category.user_id)
     items = session.query(EquipmentItem).all()
-    equipment = session.query(EquipmentItem).filter_by(name=item_name).one()
+    equipment = session.query(EquipmentItem).filter_by(name=item_name).first()
     # if 'username' not in login_session or creator.id !=
     # login_session['user_id']:
     if 'username' not in login_session:
@@ -459,12 +450,8 @@ def showEquip(category_name, item_name):
     else:
         return render_template('equipment.html', creator=creator,
                                equipment=equipment, items=items, category_name=category.name)
-    '''return render_template('equipment.html', creator = creator, 
-            equipment = equipment, items = items, category_name = category.name)'''
 
-# Create a new equip in particular category
-
-
+# Create a new equipment in particular category
 @app.route('/catelog/<category_name>/item/new/', methods=['GET', 'POST'])
 def newEquip(category_name):
     if 'username' not in login_session:
@@ -475,16 +462,12 @@ def newEquip(category_name):
                               category_id=category.id, user_id=login_session['user_id'])
         session.add(equip)
         session.commit()
-        '''add_equip = LastAdded(equipment=request.form[
-                              'name'], category=category.name)
-        session.add(add_equip)
-        session.commit()'''
         flash('New Item %s Successfully Created' % (equip.name))
         return redirect(url_for('showItem', category_name=category_name))
     else:
         return render_template('newEquip.html', category_name=category_name)
 
-
+# Edit an equipment in particular category
 @app.route('/catelog/<equipment_name>/edit', methods=['GET', 'POST'])
 def editEquip(equipment_name):
     if 'username' not in login_session:
@@ -509,16 +492,12 @@ def editEquip(equipment_name):
             editedEquip.category_id = convertCatId.id
         session.add(editedEquip)
         session.commit()
-        '''add_equip = LastAdded(equipment=request.form[
-                              'name'], category=category.name)
-        session.add(add_equip)
-        session.commit()'''
         flash('Equip Successfully Edited')
         return redirect(url_for('showItem', category_name=category.name))
     else:
         return render_template('editEquip.html', equipment_name=equipment_name, editedEquip=editedEquip, category=category, category_all=category_all)
 
-
+# Delete an equipment in particular category
 @app.route('/catelog/<equipment_name>/delete', methods=['GET', 'POST'])
 def deleteEquip(equipment_name):
     if 'username' not in login_session:
@@ -535,15 +514,11 @@ def deleteEquip(equipment_name):
         session.delete(equipToDelete)
         session.commit()
         flash('Equip Successfully Deleted')
-        # return redirect(url_for('showEquip', category_name = category_name,
-        # item_name=item_name))
         return redirect(url_for('showItem', category_name=category.name))
     else:
         return render_template('deleteEquip.html', equipment_name=equipment_name, category=category, equipToDelete=equipToDelete)
 
 # Disconnect based on provide
-
-
 @app.route('/disconnect')
 def disconnect():
     if 'provider' in login_session:

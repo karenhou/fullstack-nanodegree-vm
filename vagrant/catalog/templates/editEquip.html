@@ -1,22 +1,22 @@
-{% extends "main.html" %} {% block content %} {% include "header.html" %}
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
 <main class="container">
-    <div class="row divider green">
-        <div class="col-md-12"></div>
-    </div>
-    <div class="row banner menu">
-        <div class="col-md-11 col-md-offset-1 padding-none">
+    <div class="row">
+        <div class="col-md-12">
             <h1 class="editItemfont">Edit Item: {{equipment_name}}</h1>
         </div>
     </div>
-    <div class="row ">
-        <div class="col-md-6 col-md-offset-1 padding-top">
+    <div class="row">
+        <div class="col-md-12">
             <form action="{{ url_for('editEquip', equipment_name = equipment_name)}}" method="post">
                 <div class="form-group">
                     <label for="name">Title:</label>
                     <input type="text" maxlength="80" class="form-control" name="name" value="{{editedEquip.name }}">
                     <label for="description">Description:</label>
-                    <textarea class="form-control" maxlength="250" rows="3" name="description">{{editedEquip.description}}</textarea>
-                    <select name="category_name">
+                    <textarea class="form-control edit-margin" maxlength="250" rows="3" name="description">{{editedEquip.description}}</textarea>
+                    <label for="Category">Category:</label>
+                    <select class="edit-margin" name="category_name">
                         <option selected hidden>{{category.name}}</option>
                         {% for c in category_all%}
                         <option value="{{c.name}}">{{c.name}}</option>
@@ -25,10 +25,10 @@
                     <br>
                     <button type="submit" class="btn btn-default" id="submit" type="submit">
                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Submit</button>
-                    <a href="{{url_for('showEquip', category_name=category.name, item_name = editedEquip.name)}}">
+                            <a href="{{url_for('showEquip', category_name=category.name, item_name = editedEquip.name)}}">
                         <button type="button" class="btn btn-default delete">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Cancel</button>
-                    </a>
+                        </a>
                 </div>
             </form>
         </div>

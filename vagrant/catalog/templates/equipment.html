@@ -14,8 +14,8 @@
         <p>Description: {{equipment.description}}</p>
         <a href='{{url_for('editEquip', equipment_name = equipment.name) }}' class="equipfont">Edit |</a>
         <a href='{{url_for('deleteEquip',  equipment_name = equipment.name) }}' class="equipfont">Delete</a>
-        <p>created time: {{equipment.time_created}}</p>
-        <p>updated time: {{equipment.time_updated}}</p>
+        <p>created time(UTC): {{equipment.time_created}}</p>
+        <p>updated time(UTC): {{equipment.time_updated}}</p>
     </section>
 </main>
 {% endblock %}
