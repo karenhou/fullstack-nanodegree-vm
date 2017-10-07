@@ -269,7 +269,7 @@ def gdisconnect():
 
 
 # JSON APIs to view Category Information
-@app.route('/catelog/<int:category_id>/item/JSON')
+@app.route('/catalog/<int:category_id>/item/JSON')
 def categoryItemJSON(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(EquipmentItem).filter_by(
@@ -277,13 +277,13 @@ def categoryItemJSON(category_id):
     return jsonify(Items=[i.serialize for i in items])
 
 
-@app.route('/catelog/<int:category_id>/item/<int:item_id>/JSON')
+@app.route('/catalog/<int:category_id>/item/<int:item_id>/JSON')
 def ItemJSON(category_id, item_id):
     Item = session.query(EquipmentItem).filter_by(id=item_id).one()
     return jsonify(Item=Item.serialize)
 
 
-@app.route('/catelog.json')
+@app.route('/catalog.json')
 def categoryJSON():
     categories = session.query(Category).all()
     items = session.query(EquipmentItem).all()
@@ -292,7 +292,7 @@ def categoryJSON():
 
 # Show all categories
 @app.route('/')
-@app.route('/catelog/')
+@app.route('/catalog/')
 def showCategories():
     #categories = session.query(Category).order_by(asc(Category.name))
     categories = session.query(Category).all()
@@ -303,7 +303,7 @@ def showCategories():
         return render_template('categories.html', categories=categories, latest_add=latest_add)
 
 # Create a new category
-@app.route('/catelog/new/', methods=['GET', 'POST'])
+@app.route('/catalog/new/', methods=['GET', 'POST'])
 def newCategory():
     if 'username' not in login_session:
         return redirect('/login')
@@ -317,7 +317,7 @@ def newCategory():
         return render_template('newCategory.html')
 
 # Edit a category
-'''@app.route('/catelog/<category_name>/edit/', methods=['GET','POST'])
+'''@app.route('/catalog/<category_name>/edit/', methods=['GET','POST'])
 def editCategory(category_name):
     if 'username' not in login_session:
         return redirect('/login')
@@ -337,7 +337,7 @@ def editCategory(category_name):
         return render_template('editCategory.html', category_name=category_name, editCategory = editCategory)
 
 #Delete a category
-@app.route('/catelog/<category_name>/delete/', methods=['GET','POST'])
+@app.route('/catalog/<category_name>/delete/', methods=['GET','POST'])
 def deleteCategory(category_name):
   if 'username' not in login_session:
     return redirect('/login')
@@ -355,8 +355,8 @@ def deleteCategory(category_name):
     return render_template('deleteCategory.html',category = categoryToDelete)'''
 
 # List all equipment under specific category
-@app.route('/catelog/<category_name>/')
-@app.route('/catelog/<category_name>/items')
+@app.route('/catalog/<category_name>/')
+@app.route('/catalog/<category_name>/items')
 def showItem(category_name):
     count = 0
     categories = session.query(Category).all()
@@ -376,7 +376,7 @@ def showItem(category_name):
                                creator=creator, categories=categories, count=count)
 
 # Show particular equipment with description
-@app.route('/catelog/<category_name>/<item_name>')
+@app.route('/catalog/<category_name>/<item_name>')
 def showEquip(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
     creator = getUserInfo(category.user_id)
@@ -392,7 +392,7 @@ def showEquip(category_name, item_name):
                                equipment=equipment, items=items, category_name=category.name)
 
 # Create a new equipment in particular category
-@app.route('/catelog/<category_name>/item/new/', methods=['GET', 'POST'])
+@app.route('/catalog/<category_name>/item/new/', methods=['GET', 'POST'])
 def newEquip(category_name):
     if 'username' not in login_session:
         return redirect('/login')
@@ -408,7 +408,7 @@ def newEquip(category_name):
         return render_template('newEquip.html', category_name=category_name)
 
 # Edit an equipment in particular category
-@app.route('/catelog/<equipment_name>/edit', methods=['GET', 'POST'])
+@app.route('/catalog/<equipment_name>/edit', methods=['GET', 'POST'])
 def editEquip(equipment_name):
     if 'username' not in login_session:
         return redirect('/login')
@@ -442,7 +442,7 @@ def editEquip(equipment_name):
         return render_template('editEquip.html', equipment_name=equipment_name, editedEquip=editedEquip, category=category, category_all=category_all)
 
 # Delete an equipment in particular category
-@app.route('/catelog/<equipment_name>/delete', methods=['GET', 'POST'])
+@app.route('/catalog/<equipment_name>/delete', methods=['GET', 'POST'])
 def deleteEquip(equipment_name):
     if 'username' not in login_session:
         return redirect('/login')
