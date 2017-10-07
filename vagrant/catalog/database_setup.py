@@ -30,8 +30,8 @@ class Category(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'name': self.name,
             'id': self.id,
+            'name': self.name,
         }
 
 
@@ -52,9 +52,10 @@ class EquipmentItem(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'name': self.name,
+            'cat_id': self.category_id,
             'description': self.description,
             'id': self.id,
+            'title': self.name,
         }
 
 

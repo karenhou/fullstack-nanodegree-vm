@@ -269,19 +269,16 @@ def gdisconnect():
 
 
 # JSON APIs to view Category Information
-@app.route('/catalog/<int:category_id>/item/JSON')
-def categoryItemJSON(category_id):
-    category = session.query(Category).filter_by(id=category_id).one()
+@app.route('/catalog/<int:category_id>/equipments.json')
+def EquipmentJSON(category_id):
     items = session.query(EquipmentItem).filter_by(
         category_id=category_id).all()
     return jsonify(Items=[i.serialize for i in items])
 
-
-@app.route('/catalog/<int:category_id>/item/<int:item_id>/JSON')
-def ItemJSON(category_id, item_id):
-    Item = session.query(EquipmentItem).filter_by(id=item_id).one()
-    return jsonify(Item=Item.serialize)
-
+@app.route('/catalog/all_equips.json')
+def allEquipsJSON():
+    equip = session.query(EquipmentItem).all()
+    return jsonify(Item=[e.serialize for e in equip])
 
 @app.route('/catalog.json')
 def categoryJSON():
@@ -429,11 +426,7 @@ def editEquip(equipment_name):
         if request.form['category_name']:
             convertCatId = session.query(Category).filter(
                 Category.name == request.form['category_name']).one()
-            print "id="+str(convertCatId.id)
             editedEquip.category_id = convertCatId.id
-        print editedEquip.name
-        print editedEquip.id
-        print editedEquip.category_id
         session.add(editedEquip)
         session.commit()
         flash('Equip Successfully Edited')
