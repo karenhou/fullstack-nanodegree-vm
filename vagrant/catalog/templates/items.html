@@ -1,54 +1,58 @@
-{% extends "main.html" %} {% block content %} {% include "header.html" %}
-<div class='flash'>
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li> <strong> {{ message }} </strong> </li>
-        {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class='container flash'>
+    <div class='row'>
+        <div class="col-md-12">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                    <li> <strong> {{ message }} </strong> </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
 </div>
 <main class="container">
-    <div class="row display-flex">
-        <section class="col-6 col-md-4 ">
+    <div class="row">
+        <div class="col-6 col-md-4">
             <div class="row verticalLine">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
+                <div class="col-md-12 ">
                     <h3>Categories</h3>
                 </div>
-                <div class="col-md-1"></div>
             </div>
             {% for category in categories %}
             <a href="{{url_for('showItem', category_name = category.name)}}">
                 <div class="row verticalLine">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10 category-list">
+                    <div class="col-md-12">
                         <h4>{{category.name}}</h4>
                     </div>
-                    <div class="col-md-1"></div>
                 </div>
-                {% endfor %}
-        </section>
-        <section class="col-12 col-md-8">
-            <div class="row display-flex">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-                    <a href='{{url_for('newEquip', category_name = category.name) }}' class="newitemfont">Add Equip Item</a>
+            {% endfor %}
+        </div>
+        <div class="col col-md-8">
+            <div class="row">
+                <div class="col-md-12 add-link-margin">
+                    <a href='{{url_for('newEquip', category_name = category.name) }}'>Add Equip Item</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <h3>{{category.name}} items ({{count}} items)</h3>
                 </div>
-                <div class="col-md-1"></div>
+                {% for item in items %}
+                    {% if item.category_id == category.id %}
+                        <div class="col-md-12">
+                            <a href="{{url_for('showEquip', category_name = category.name, item_name = item.name)}}">
+                                <h4>{{item.name}}</h4>
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-            {% for item in items %} {% if item.category_id == category.id %}
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10 category-list">
-                    <a href="{{url_for('showEquip', category_name = category.name, item_name = item.name)}}">
-                        <h4>{{item.name}}</h4>
-                </div>
-                <div class="col-md-1"></div>
-            </div>
-            {% endif %} {% endfor %}
-        </section>
+        </div>
     </div>
 </main>
 {% endblock %}

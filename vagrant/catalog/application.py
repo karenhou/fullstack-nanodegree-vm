@@ -59,7 +59,7 @@ def getUserID(email):
     except:
         return None
 
-
+# login to FB account
 @app.route('/fbconnect', methods=['POST'])
 def fbconnect():
     if request.args.get('state') != login_session['state']:
@@ -129,7 +129,7 @@ def fbconnect():
     flash("Now logged in as %s" % login_session['username'])
     return output
 
-
+# log off from Facebook
 @app.route('/fbdisconnect')
 def fbdisconnect():
     facebook_id = login_session['facebook_id']
@@ -142,6 +142,7 @@ def fbdisconnect():
     return "you have been logged out"
 
 
+# log in to Google
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     # Validate state token
@@ -232,7 +233,7 @@ def gconnect():
     print "done!"
     return output
 
-
+# log off from Google
 @app.route('/gdisconnect')
 def gdisconnect():
     access_token = login_session.get('access_token')
@@ -333,10 +334,10 @@ def editCategory(category_name):
             flash('Category Successfully Edited %s' % editCategory.name)
             return redirect(url_for('showCategories'))
     else:
-        return render_template('editCategory.html', category_name=category_name, editCategory = editCategory)'''
+        return render_template('editCategory.html', category_name=category_name, editCategory = editCategory)
 
 #Delete a category
-'''@app.route('/catelog/<category_name>/delete/', methods=['GET','POST'])
+@app.route('/catelog/<category_name>/delete/', methods=['GET','POST'])
 def deleteCategory(category_name):
   if 'username' not in login_session:
     return redirect('/login')
@@ -412,7 +413,7 @@ def editEquip(equipment_name):
     if 'username' not in login_session:
         return redirect('/login')
     editedEquip = session.query(EquipmentItem).filter_by(
-        name=equipment_name).one()
+        name=equipment_name).first()
     category = session.query(Category).filter(
         Category.id == editedEquip.category_id).one()
     category_all = session.query(Category.name).all()
@@ -428,7 +429,11 @@ def editEquip(equipment_name):
         if request.form['category_name']:
             convertCatId = session.query(Category).filter(
                 Category.name == request.form['category_name']).one()
+            print "id="+str(convertCatId.id)
             editedEquip.category_id = convertCatId.id
+        print editedEquip.name
+        print editedEquip.id
+        print editedEquip.category_id
         session.add(editedEquip)
         session.commit()
         flash('Equip Successfully Edited')
@@ -442,9 +447,9 @@ def deleteEquip(equipment_name):
     if 'username' not in login_session:
         return redirect('/login')
     equipToDelete = session.query(
-        EquipmentItem).filter_by(name=equipment_name).one()
+        EquipmentItem).filter_by(name=equipment_name).first()
     category = session.query(Category).filter(
-        Category.id == equipToDelete.category_id).one()
+        Category.id == equipToDelete.category_id).first()
     '''if login_session['user_id'] != equipToDelete.user_id:
         return "<script>function myFunction() {alert('You are not authorized to delete"
         " items to this equipment. Please create your own equipment in order"

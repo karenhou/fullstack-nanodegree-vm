@@ -1,18 +1,12 @@
-{% extends "main.html" %} {% block content %} {% include "header.html" %}
-<div class='flash'>
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li> <strong> {{ message }} </strong> </li>
-        {% endfor %}
-    </ul>
-    {% endif %} 
-    {% endwith %}
-</div>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
 <main class="container">
-    <section class="row display-flex equip-des">
-        <h3>{{equipment.name}}</h3>
-        <p>Description: {{equipment.description}}</p>
-    </section>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>{{equipment.name}}</h3>
+            <p>Description: {{equipment.description}}</p>
+        </div>
+    </div>
 </main>
 {% endblock %}
